@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Minecraft Server Manager</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: auto; text-align: center; }
+        button { margin: 10px; padding: 10px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Minecraft Server Kontrolle</h1>
+    <div id="serverStatus">Status: Unbekannt</div>
+    <button onclick="controlServer('start')">Server Starten</button>
+    <button onclick="controlServer('stop')">Server Stoppen</button>
+    <button onclick="checkStatus()">Status Prüfen</button>
+
+    <script>
+    function controlServer(action) {
+        alert(`Server wird ${action === 'start' ? 'gestartet' : 'gestoppt'}...`);
+        // Hier später API-Anbindung
+    }
+
+    function checkStatus() {
+        document.getElementById('serverStatus').innerText = 'Status: Online';
+    }
+    </script>
+</body>
+</html>
