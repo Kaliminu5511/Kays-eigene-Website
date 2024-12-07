@@ -2,28 +2,35 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Minecraft Server Manager</title>
-    <style>
-        body { font-family: Arial; max-width: 600px; margin: auto; text-align: center; }
-        button { margin: 10px; padding: 10px; font-size: 16px; }
-    </style>
+    <title>Minecraft Server Verwaltung</title>
 </head>
 <body>
-    <h1>Minecraft Server Kontrolle</h1>
-    <div id="serverStatus">Status: Unbekannt</div>
-    <button onclick="controlServer('start')">Server Starten</button>
-    <button onclick="controlServer('stop')">Server Stoppen</button>
-    <button onclick="checkStatus()">Status Prüfen</button>
+    <h1>Minecraft Server Verwaltung</h1>
+    <p>Status: <span id="status">Unbekannt</span></p>
+
+    <button onclick="serverAction('start')">Server Starten</button>
+    <button onclick="serverAction('stop')">Server Stoppen</button>
+    <button onclick="serverAction('status')">Status Prüfen</button>
 
     <script>
-    function controlServer(action) {
-        alert(`Server wird ${action === 'start' ? 'gestartet' : 'gestoppt'}...`);
-        // Hier später API-Anbindung
-    }
-
-    function checkStatus() {
-        document.getElementById('serverStatus').innerText = 'Status: Online';
-    }
+        function serverAction(action) {
+            fetch('server-control.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=' + action,
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (action === 'status') {
+                    document.getElementById('status').innerText = data;
+                } else {
+                    alert(data);
+                }
+            })
+            .catch(error => console.error('Fehler:', error));
+        }
     </script>
 </body>
 </html>
